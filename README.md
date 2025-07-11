@@ -1,2 +1,1 @@
-# t1-frontend
-T1 homework repo
+use this repo for upload homeworks T1-course
