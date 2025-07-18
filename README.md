@@ -18,8 +18,8 @@
 
 ```bash
 # 1. Клонируй репозиторий
-git clone https://github.com/your-username/your-repo-name.git
-cd your-repo-name
+git clone https://github.com/bladasone/t1-frontend.git
+cd t1-frontend
 
 # 2. Установи зависимости
 npm install
