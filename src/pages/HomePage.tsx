@@ -83,8 +83,8 @@ export default function HomePage() {
     };
 
     return (
-        <Box sx={{ textAlign: 'center', p: 3 }}>
-            <Typography variant="h4" sx={{ my: 3 }}>
+        <Box sx={{ textAlign: 'center'}}>
+            <Typography variant="h4" sx={{ my: 1, borderBottom: 'solid', pt:1,  pb: 2}}>
                 Управление задачами
             </Typography>
 
@@ -94,26 +94,27 @@ export default function HomePage() {
                 onTaskEdit={handleTaskEdit}
             />
 
-            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'center'}}>
                 <Button
                     variant="contained"
                     sx={{
+                        mt: 3,
                         bgcolor: '#3b8132',
                         borderRadius: '50%',
-                        minWidth: '40px',
-                        width: '40px',
-                        height: '40px',
+                        minWidth: '50px',
+                        width: '60px',
+                        height: '60px',
                         padding: 0,
                         '&:hover': {
                             bgcolor: '#2a6122',
-                            transform: 'scale(1.1)',
-                            transition: 'transform 0.2s'
+                            transform: 'scale(1.2)',
+                            transition: 'transform 0.3s'
                         }
                     }}
                     onClick={() => setIsAddDialogOpen(true)}
                     aria-label="Добавить задачу"
                 >
-                    <AddIcon fontSize="medium" />
+                    <AddIcon fontSize="large" />
                 </Button>
             </Box>
 
@@ -189,8 +190,9 @@ export default function HomePage() {
                     </FormControl>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => setIsAddDialogOpen(false)}>Отмена</Button>
-                    <Button onClick={addTask} disabled={!newTask.title}>
+                    <Button variant='outlined'
+                            sx={{border: 'solid red 2px', color: 'red', mr: 3 }} onClick={() => setIsAddDialogOpen(false)}>Отмена</Button>
+                    <Button variant='contained' sx={{ bgcolor: '#3b8132'}} onClick={addTask} disabled={!newTask.title}>
                         Добавить
                     </Button>
                 </DialogActions>

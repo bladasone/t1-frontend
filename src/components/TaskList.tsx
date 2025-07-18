@@ -19,8 +19,8 @@ export default function TaskList({
                                  }: TaskListProps) {
     if (!tasks || tasks.length === 0) {
         return (
-            <Box sx={{ textAlign: 'center', p: 4 }}>
-                <Typography variant="h6">{emptyMessage}</Typography>
+            <Box sx={{ textAlign: 'center', p: 4, mt: 4 }}>
+                <Typography sx= {{ color: '#545454',fontSize: '25px'}} variant="h6">{emptyMessage}</Typography>
             </Box>
         );
     }

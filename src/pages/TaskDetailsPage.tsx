@@ -89,9 +89,8 @@ export default function TaskDetailsPage() {
             </FormControl>
 
             <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
-                <Button
-                    variant="outlined"
-                    sx={{ border: 'solid 1px #3b8132', color: '#3b8132' }}
+                <Button variant='outlined'
+                    sx={{border: 'solid red 2px', color: 'red', mr: 3 }}
                     onClick={() => navigate('/')}
                 >
                     Отмена
