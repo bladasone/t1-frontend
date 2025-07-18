@@ -1,7 +1,6 @@
 # Task Manager App
 
 Простой планировщик задач с возможностью добавления, редактирования и удаления задач.
-Интерфейс построен на **React**, **Vite**, **TypeScript** и **Material UI**.
 
 ---
 
@@ -10,7 +9,8 @@
 - React + TypeScript
 - Vite
 - Material UI
-- LocalStorage для хранения задач
+- LocalStorage (хранение задач локально в кэше браузера)
+- React Router v6 для маршрутизации
 
 ---
 
