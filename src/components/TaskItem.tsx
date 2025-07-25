@@ -1,106 +1,82 @@
-
-
-import { Card, CardContent, Chip, Button, Stack, Typography, IconButton, Box } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import type { Task } from '@/entities/task/types';
+import { Box, Typography, Chip, IconButton, Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import type { Task } from '../types';
 
+/**
+ * Пропсы компонента TaskItem
+ * @property task - объект задачи с данными
+ * @property onDelete - функция, вызываемая при удалении задачи
+ * @property onEdit - функция, вызываемая при редактировании задачи
+ */
 interface TaskItemProps {
     task: Task;
-    onDelete?: (id: string) => void;
-    onEdit?: (task: Task) => void;
+    onDelete: () => void;
+    onEdit: () => void;
 }
 
-export default function TaskItem({ task, onDelete, onEdit }: TaskItemProps) {
-    const navigate = useNavigate();
-
-    const getPriorityColor = () => {
-        switch (task.priority) {
-            case 'Очень важно': return 'error';
-            case 'Важно': return 'warning';
-            default: return 'success';
-        }
-    };
-
+/**
+ * Компонент TaskItem
+ * Отображает карточку задачи с основной информацией:
+ * заголовок, описание, метки (категория, статус, приоритет), дата создания,
+ * а также кнопки для удаления и редактирования.
+ */
+export const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onEdit }) => {
     return (
-        <Card sx={{
-            border: 'solid 2px',
-            height: '100%',
-            width: '20vw',
-            minWidth: '250px',
-            transition: 'transform 0.2s',
-            '&:hover': {
-                transform: 'scale(1.02)',
-            }
-        }}>
-            <CardContent sx={{
+        <Box
+            sx={{
+                border: '1px solid #ccc',
+                borderRadius: 2,
+                p: 2,
                 display: 'flex',
                 flexDirection: 'column',
-                alignItems: 'center',
-                gap: 1
-            }}>
-                <Box sx={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    width: '100%',
-                    alignItems: 'center'
-                }}>
-                    <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-                        {task.title}
-                    </Typography>
-                    {onDelete && (
-                        <IconButton
-                            onClick={() => onDelete(task.id)}
-                            color="error"
-                            size="small"
-                        >
-                            <DeleteIcon />
-                        </IconButton>
-                    )}
-                </Box>
+                gap: 1,
+                position: 'relative',
+                backgroundColor: '#fafafa',
+            }}
+        >
+            {/* Заголовок задачи */}
+            <Typography variant="h6">{task.title}</Typography>
 
-                {task.description && (
-                    <Typography variant="body2" color="text.secondary" sx={{
-                        mb: 1,
-                        textAlign: 'center'
-                    }}>
-                        {task.description}
-                    </Typography>
-                )}
+            {/* Описание задачи (если есть) */}
+            {task.description && (
+                <Typography variant="body2">{task.description}</Typography>
+            )}
 
-                <Stack sx={{ mb: 2, width: '100%' }} gap={1}>
-                    <Chip
-                        label={task.category}
-                        sx={{ borderRadius: '10px', width: '100%' }}
-                    />
-                    <Chip
-                        label={task.status}
-                        variant="outlined"
-                        sx={{ borderRadius: '10px', width: '100%' }}
-                    />
-                    <Chip
-                        label={task.priority}
-                        color={getPriorityColor()}
-                        sx={{ borderRadius: '10px', width: '100%' }}
-                    />
-                </Stack>
+            {/* Метки: категория, статус, приоритет */}
+            <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+                <Chip label={task.category} color="primary" size="small" />
+                <Chip label={task.status} color="secondary" size="small" />
+                <Chip label={task.priority} color="warning" size="small" />
+            </Box>
 
-                <Box sx={{ display: 'flex', gap: 1, width: '100%' }}>
-                    <Button
-                        variant="contained"
-                        startIcon={<EditIcon />}
-                        onClick={() => onEdit ? onEdit(task) : navigate(`/task/${task.id}`)}
-                        sx={{
-                            flexGrow: 1,
-                            bgcolor: '#187bcd',
-                            '&:hover': { bgcolor: '#1167b1' }
-                        }}
-                    >
-                        Редактировать
-                    </Button>
-                </Box>
-            </CardContent>
-        </Card>
+            {/* Дата создания */}
+            <Typography variant="caption" sx={{ mt: 1 }}>
+                Создано: {new Date(task.createdAt).toLocaleDateString()}
+            </Typography>
+
+            {/* Кнопки удаления и редактирования */}
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 1, mt: 2 }}>
+                <IconButton
+                    aria-label="delete"
+                    size="small"
+                    onClick={onDelete}
+                >
+                    <DeleteIcon fontSize="small" color="error" />
+                </IconButton>
+
+                <Button
+                    variant="outlined"
+                    size="small"
+                    onClick={onEdit}
+                    sx={{
+                        border: 'solid #3b8132 1px',
+                        color: '#3b8132',
+                    }}
+                >
+                    Редактировать
+                </Button>
+            </Box>
+        </Box>
     );
-}
+};
