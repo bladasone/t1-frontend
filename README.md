@@ -45,10 +45,15 @@ Task Manager — это одностраничное приложение для
 
 Структура проекта:
 --------------------------------
-src/
-├── app/            # Инициализация приложения
-├── pages/          # TaskListPage, TaskFormPage
-├── components/     # TaskItem и другие UI-компоненты
-├── entities/task/  # Сущность задачи: store, типы
-├── shared/         # Общие утилиты, типы и стили
+-src/
+
+-├── app/            Инициализация приложения
+
+-├── pages/          TaskListPage, TaskFormPage
+
+-├── components/     TaskItem и другие UI-компоненты
+
+-├── entities/task/  Сущность задачи: store, типы
+
+-├── shared/         Общие утилиты, типы и стили
 

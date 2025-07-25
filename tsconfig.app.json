@@ -14,10 +14,13 @@
     "skipLibCheck": true,
 
     "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
+    "allowImportingTsExtensions": false,  // изменено на false
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
-    "noEmit": true,
+
+    "composite": true,
+    "noEmit": false,
+
     "jsx": "react-jsx",
 
     "strict": true,
