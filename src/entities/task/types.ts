@@ -13,3 +13,8 @@ export type Task = {
     priority: Priority;
     createdAt: string;
 };
+
+export type TaskFilter = {
+    title?: string;
+    date?: string;
+};

@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { nanoid } from 'nanoid';
-import type { Task } from './types';
+import type { Task, TaskFilter } from './types';
+import * as api from '../../api/api';
 
 interface TaskStore {
     tasks: Task[];
@@ -8,29 +9,16 @@ interface TaskStore {
     updateTask: (updatedTask: Task) => void;
     deleteTask: (id: string) => void;
     getTaskById: (id: string) => Task | undefined;
+    loadTasks: (filter?: TaskFilter) => void;
 }
 
-const LOCAL_STORAGE_KEY = 'tasks';
+export const useTaskStore = create<TaskStore>((set) => ({
+    tasks: [],
 
-const loadTasks = (): Task[] => {
-    try {
-        const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
-        return stored ? JSON.parse(stored) : [];
-    } catch {
-        return [];
-    }
-};
-
-const saveTasks = (tasks: Task[]) => {
-    try {
-        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(tasks));
-    } catch (e) {
-        console.error('Ошибка при сохранении задач в localStorage:', e);
-    }
-};
-
-export const useTaskStore = create<TaskStore>((set, get) => ({
-    tasks: loadTasks(),
+    loadTasks: (filter) => {
+        const tasks = api.getTasks(filter);
+        set({ tasks });
+    },
 
     createTask: (taskData) => {
         const newTask: Task = {
@@ -38,24 +26,19 @@ export const useTaskStore = create<TaskStore>((set, get) => ({
             createdAt: new Date().toISOString(),
             ...taskData,
         };
-        const updatedTasks = [...get().tasks, newTask];
-        saveTasks(updatedTasks);
-        set({ tasks: updatedTasks });
+        api.createTask(newTask);
+        set({ tasks: api.getTasks() });
     },
 
     updateTask: (updatedTask) => {
-        const updatedTasks = get().tasks.map((task) =>
-            task.id === updatedTask.id ? updatedTask : task
-        );
-        saveTasks(updatedTasks);
-        set({ tasks: updatedTasks });
+        api.updateTask(updatedTask);
+        set({ tasks: api.getTasks() });
     },
 
     deleteTask: (id) => {
-        const updatedTasks = get().tasks.filter((task) => task.id !== id);
-        saveTasks(updatedTasks);
-        set({ tasks: updatedTasks });
+        api.deleteTask(id);
+        set({ tasks: api.getTasks() });
     },
 
-    getTaskById: (id) => get().tasks.find((task) => task.id === id),
+    getTaskById: (id) => api.getTaskById(id),
 }));
